@@ -432,13 +432,16 @@ header {
 }
 
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
     margin-bottom: 3rem;
+    justify-content: flex-m;
 }
 
 .project-card {
+    width: 320px;
+    margin-bottom: 1rem;
     background-color: white;
     border-radius: 15px;
     overflow: hidden;
@@ -628,6 +631,9 @@ header {
     display: flex;
     gap: 3rem;
     flex-wrap: wrap;
+    padding: 0 0.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .contact-info {
