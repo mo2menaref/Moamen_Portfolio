@@ -229,8 +229,6 @@ if (contactForm) {
         // App header
         const appHeader = document.createElement('div');
         appHeader.className = 'app-header';
-        appHeader.innerHTML = '<div class="app-title">Flutter App</div>';
-        appHeader.style.backgroundColor = '#19B8FA';
         appHeader.style.color = 'white';
         appHeader.style.padding = '15px';
         appHeader.style.textAlign = 'center';
@@ -245,23 +243,46 @@ if (contactForm) {
         appContent.style.height = 'calc(100% - 110px)';
         appContent.style.overflowY = 'auto';
         
-        // Create sample content items
-        for (let i = 1; i <= 5; i++) {
-            const item = document.createElement('div');
-            item.className = 'app-item';
-            item.innerHTML = `
-                <div class="app-item-content">
-                    <h3>Flutter Widget ${i}</h3>
-                    <p>Beautiful cross-platform UI component</p>
-                </div>
-            `;
-            item.style.backgroundColor = '#F3F7FA';
-            item.style.padding = '15px';
-            item.style.borderRadius = '8px';
-            item.style.marginBottom = '10px';
-            item.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
-            appContent.appendChild(item);
-        }
+        // Portfolio navigation app
+appHeader.innerHTML = '<div class="app-title">Portfolio Guide</div>';
+appHeader.style.backgroundColor = '#19B8FA';
+
+// Create navigation sections
+const sections = [
+    { name: "About Me", icon: "👨‍💻", target: "#about" },
+    { name: "Mobile Apps", icon: "📱", target: "#projects" },
+    { name: "UI/UX Designs", icon: "🎨", target: "#projects" },
+    { name: "Skills", icon: "🛠️", target: "#skills" },
+    { name: "Contact", icon: "📧", target: "#contact" }
+];
+
+sections.forEach(section => {
+    const navItem = document.createElement('div');
+    navItem.className = 'nav-item';
+    navItem.innerHTML = `
+        <div style="display: flex; align-items: center;">
+            <span style="font-size: 24px; margin-right: 15px;">${section.icon}</span>
+            <span style="font-size: 16px;">${section.name}</span>
+        </div>
+        <i class="fas fa-chevron-right" style="color: #999;"></i>
+    `;
+    navItem.style.display = 'flex';
+    navItem.style.justifyContent = 'space-between';
+    navItem.style.alignItems = 'center';
+    navItem.style.backgroundColor = 'white';
+    navItem.style.padding = '15px';
+    navItem.style.borderRadius = '8px';
+    navItem.style.marginBottom = '10px';
+    navItem.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+    navItem.style.cursor = 'pointer';
+    
+    // Add click functionality to actually navigate the portfolio
+    navItem.addEventListener('click', () => {
+        document.querySelector(section.target).scrollIntoView({behavior: 'smooth'});
+    });
+    
+    appContent.appendChild(navItem);
+});
         
         appDemo.appendChild(appContent);
         
