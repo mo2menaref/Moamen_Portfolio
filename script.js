@@ -318,3 +318,182 @@ if (contactForm) {
         });
     }
 });
+
+// Project Details Modal Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all project cards and add click event
+    const projectCards = document.querySelectorAll('.project-card');
+    const projectDetailsOverlay = document.getElementById('project-details-overlay');
+    const projectDetailsContent = document.getElementById('project-details-content');
+    const closeProjectDetails = document.getElementById('close-project-details');
+    
+    // Project details data - Makadi Vacation
+    const projectsData = {
+        'makadi-vacation': {
+            title: 'Makadi Vacation',
+            description: `
+                <p>The Makadi Vacation project was designed to automate booking processes for vacation rentals, 
+                providing users with a seamless experience from browsing available properties to 
+                completing their reservation.</p>
+                
+                <p>The key features include:</p>
+                <ul>
+                    <li>Intuitive property browsing with advanced filters</li>
+                    <li>Secure booking management system</li>
+                    <li>Reservation modification and cancellation</li>
+                    <li>User profile and booking history</li>
+                </ul>
+                
+                <p>My role in this project was to create the complete UI/UX design from wireframing to high-fidelity prototypes.
+                I conducted user research and testing to ensure the interface was intuitive and met user needs.</p>
+            `,
+            gallery: [
+                'assets/Makadi/MakadiVacation1.png',
+                'assets/Makadi/MakadiVacation2.png',
+                'assets/Makadi/MakadiVacation3.png'
+            ],
+            links: {
+                behance: 'https://www.behance.net/gallery/208377471/Makadi-Vacation',
+                github: 'https://github.com/your-username/project-repo'
+            },
+            technologies: ['Figma', 'UI/UX', 'Prototype']
+        },
+        'flash': {
+    title: 'Flash',
+    description: `
+        <p>This project was designed to streamline the process of buying and selling both new and used cars through a user-friendly online platform. 
+        It connects individual sellers, dealerships, and buyers in a secure and efficient environment.</p>
+
+        <p>The key features include:</p>
+        <ul>
+            <li>Advanced search filters for make, model, year, price, and location</li>
+            <li>Detailed vehicle listings with photos, specifications, and history reports</li>
+            <li>Support for financing options and trade-in evaluations</li>
+            <li>User dashboards for managing listings, favorites, and purchase history</li>
+        </ul>
+
+        <p>My role in this project was to design the complete UI/UX experience—from wireframes to high-fidelity prototypes. 
+        I focused on creating intuitive navigation, responsive layouts, and a seamless flow for both buyers and sellers. 
+        I also conducted usability testing to ensure the platform met the needs of diverse user groups.</p>
+    `,
+
+            gallery: [
+                'assets/Flash/CarsDesc.png',
+                'assets/Flash/Homepage.png',
+                'assets/Flash/Login.png'
+            ],
+            links: {
+                behance: 'https://www.behance.net/gallery/229335719/Flash-%28Car-Website%29',
+                github: 'https://github.com/your-username/project-repo'
+            },
+            technologies: ['Figma', 'UI/UX', 'Prototype']
+
+        },
+
+        'demoblaze': {
+    title: 'DemoBlaze',
+    description: `
+        <p>This project involved a complete UI/UX redesign of an existing e-commerce website that specializes in selling tech products such as laptops, smartphones, and monitors. 
+        The redesign was driven by direct user feedback and usability testing to improve both the visual appeal and functional experience of the platform.</p>
+
+        <p>The key improvements include:</p>
+        <ul>
+            <li>Modernized interface with a clean, responsive layout</li>
+            <li>Enhanced product filtering and comparison tools</li>
+            <li>Streamlined checkout process to reduce cart abandonment</li>
+            <li>Improved product detail pages with clearer specs and reviews</li>
+        </ul>
+
+        <p>My role was to lead the redesign process from research to high-fidelity prototyping. 
+        I conducted user interviews, analyzed behavior patterns, and implemented design changes that aligned with user expectations and business goals. 
+        The result was a more intuitive and engaging shopping experience that increased user satisfaction and conversion potential.</p>
+    `,
+
+    gallery: [
+        'assets/Demoblaze/Home.png',
+        'assets/Demoblaze/Place Order.png',
+        'assets/Demoblaze/DeviceDetailes.png'
+    ],
+    links: {
+        behance: 'https://www.behance.net/gallery/229335057/Redesign-for-DemoBalze-website',
+        github: 'https://github.com/your-username/project-repo'
+    },
+    technologies: ['Figma', 'UI/UX', 'User Research', 'Prototype']
+}
+
+    };
+    
+    // Open project details when clicking on a project card
+    projectCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Don't open modal if clicking on a link
+            if (e.target.tagName === 'A' || e.target.parentElement.tagName === 'A') {
+                return;
+            }
+            
+            const projectId = this.getAttribute('data-project-id');
+            if (projectId && projectsData[projectId]) {
+                openProjectDetails(projectsData[projectId]);
+            }
+        });
+    });
+    
+    // Close project details
+    closeProjectDetails.addEventListener('click', function() {
+        projectDetailsOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+    
+    // Close on overlay click (outside the content)
+    projectDetailsOverlay.addEventListener('click', function(e) {
+        if (e.target === projectDetailsOverlay) {
+            projectDetailsOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // Function to open project details
+    function openProjectDetails(project) {
+        // Create content for project details
+        let galleryHTML = '';
+        if (project.gallery && project.gallery.length) {
+            galleryHTML = `
+                <div class="project-details-gallery">
+                    ${project.gallery.map(img => `<img src="${img}" alt="${project.title}">`).join('')}
+                </div>
+            `;
+        }
+        
+        let linksHTML = '';
+        if (project.links) {
+            linksHTML = '<div class="project-details-links">';
+            if (project.links.behance) {
+                linksHTML += `<a href="${project.links.behance}" target="_blank" class="project-link"><i class="fab fa-behance"></i> View on Behance</a>`;
+            }
+            // if (project.links.github) {
+            //     linksHTML += `<a href="${project.links.github}" target="_blank" class="project-link"><i class="fab fa-github"></i> View Code</a>`;
+            // }
+            linksHTML += '</div>';
+        }
+        
+        // Populate content
+        projectDetailsContent.innerHTML = `
+            <div class="project-details-description">
+                <h2>${project.title}</h2>
+                ${project.description}
+                
+                <div class="project-tech" style="margin: 1.5rem 0;">
+                    ${project.technologies.map(tech => `<span>${tech}</span>`).join('')}
+                </div>
+                
+                ${linksHTML}
+            </div>
+            
+            ${galleryHTML}
+        `;
+        
+        // Show overlay
+        projectDetailsOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling background
+    }
+});

@@ -469,6 +469,102 @@ header {
     transition: transform 0.5s ease;
 }
 
+.project-card:hover .project-image img {
+    transform: scale(1.05);
+}
+
+/* Project Details Modal */
+.project-details-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.project-details-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.project-details-container {
+    background-color: white;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh;
+    border-radius: 15px;
+    overflow-y: auto;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.project-details-overlay.active .project-details-container {
+    transform: translateY(0);
+}
+
+.project-details-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.back-button:hover {
+    opacity: 0.8;
+}
+
+.project-details-content {
+    padding: 2rem;
+}
+
+.project-details-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.project-details-gallery img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.project-details-description h2 {
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.project-details-description p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
 .project-placeholder {
     width: 100%;
     height: 100%;
