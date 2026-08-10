@@ -1,15 +1,15 @@
 // Wait for the DOM to fully load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Mobile Navigation Toggle
     const mobileMenuBtn = document.getElementById('mobile-menu');
     const mobileNav = document.getElementById('mobile-nav');
     const mobileLinks = document.querySelectorAll('.mobile-link');
-    
+
     // Toggle mobile menu
-    mobileMenuBtn.addEventListener('click', function() {
+    mobileMenuBtn.addEventListener('click', function () {
         this.classList.toggle('active');
         mobileNav.classList.toggle('show');
-        
+
         // Animate hamburger menu
         const bars = this.querySelectorAll('.bar');
         if (this.classList.contains('active')) {
@@ -22,48 +22,48 @@ document.addEventListener('DOMContentLoaded', function() {
             bars[2].style.transform = 'none';
         }
     });
-    
+
     // Close mobile menu when clicking on a link
     mobileLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             mobileMenuBtn.classList.remove('active');
             mobileNav.classList.remove('show');
-            
+
             const bars = mobileMenuBtn.querySelectorAll('.bar');
             bars[0].style.transform = 'none';
             bars[1].style.opacity = '1';
             bars[2].style.transform = 'none';
         });
     });
-    
+
     // Smooth scrolling for all links that point to an ID
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             document.querySelector(this.getAttribute('href')).scrollIntoView({
                 behavior: 'smooth'
             });
         });
     });
-    
+
     // Header scroll effect
     const header = document.querySelector('header');
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 100) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
     });
-    
+
     // Update active nav link based on scroll position
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('#desktop-nav a');
-    
-    window.addEventListener('scroll', function() {
+
+    window.addEventListener('scroll', function () {
         let current = '';
-        
+
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 current = section.getAttribute('id');
             }
         });
-        
+
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href').substring(1) === current) {
@@ -79,22 +79,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Project Filtering
     const filterBtns = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
-    
+
     filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             // Remove active class from all buttons
             filterBtns.forEach(btn => btn.classList.remove('active'));
-            
+
             // Add active class to clicked button
             this.classList.add('active');
-            
+
             // Get filter value
             const filterValue = this.getAttribute('data-filter');
-            
+
             // Filter projects
             projectCards.forEach(card => {
                 if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
@@ -113,117 +113,117 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-    
+
     // Skill Progress Animation
     const skillProgress = document.querySelectorAll('.skill-progress');
-    
+
     // Function to start animation when element is in viewport
     function animateSkill() {
         skillProgress.forEach(skill => {
             const progress = skill.getAttribute('data-progress');
             const position = skill.getBoundingClientRect().top;
             const screenPosition = window.innerHeight * 0.8;
-            
+
             if (position < screenPosition) {
                 skill.style.width = progress;
             }
         });
     }
-    
+
     // Initial check for elements in viewport
     animateSkill();
-    
+
     // Check when scrolling
     window.addEventListener('scroll', animateSkill);
-    
+
     // Animation on scroll for elements with 'animate' class
     const animatedElements = document.querySelectorAll('.animate');
-    
+
     function animateOnScroll() {
         animatedElements.forEach(el => {
             const position = el.getBoundingClientRect().top;
             const screenPosition = window.innerHeight * 0.8;
-            
+
             if (position < screenPosition) {
                 el.style.opacity = '1';
                 el.style.transform = 'translateY(0)';
             }
         });
     }
-    
+
     // Initial check for elements in viewport
     animateOnScroll();
-    
+
     // Check when scrolling
     window.addEventListener('scroll', animateOnScroll);
-    
+
     // Simple form validation for contact form
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
-        const messageInput = document.getElementById('message');
-        
-        let valid = true;
-        
-        // Simple validation
-        if (nameInput.value.trim() === '') {
-            nameInput.style.borderColor = 'red';
-            valid = false;
-        } else {
-            nameInput.style.borderColor = '';
-        }
-        
-        if (emailInput.value.trim() === '' || !validateEmail(emailInput.value)) {
-            emailInput.style.borderColor = 'red';
-            valid = false;
-        } else {
-            emailInput.style.borderColor = '';
-        }
-        
-        if (messageInput.value.trim() === '') {
-            messageInput.style.borderColor = 'red';
-            valid = false;
-        } else {
-            messageInput.style.borderColor = '';
-        }
-        
-        if (valid) {
-            // Current time for the time parameter
-            const currentTime = new Date().toLocaleString();
-            
-            // Send email using EmailJS with matching template parameters
-            emailjs.send("service_zgbq6fa", "template_uh9cn9d", {
-                title: "Contact Form Submission", // Add a title parameter
-                name: nameInput.value,
-                time: currentTime, // Add time parameter
-                email: emailInput.value,
-                message: messageInput.value
-            }).then(function(response) {
-                console.log("Email sent successfully", response);
-                alert("Message sent successfully!");
-                contactForm.reset();
-            }, function(error) {
-                console.error("Failed to send email", error);
-                alert("Failed to send message: " + (error.text || "Unknown error"));
-            });
-        }
-    });
-}
-    
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+
+            let valid = true;
+
+            // Simple validation
+            if (nameInput.value.trim() === '') {
+                nameInput.style.borderColor = 'red';
+                valid = false;
+            } else {
+                nameInput.style.borderColor = '';
+            }
+
+            if (emailInput.value.trim() === '' || !validateEmail(emailInput.value)) {
+                emailInput.style.borderColor = 'red';
+                valid = false;
+            } else {
+                emailInput.style.borderColor = '';
+            }
+
+            if (messageInput.value.trim() === '') {
+                messageInput.style.borderColor = 'red';
+                valid = false;
+            } else {
+                messageInput.style.borderColor = '';
+            }
+
+            if (valid) {
+                // Current time for the time parameter
+                const currentTime = new Date().toLocaleString();
+
+                // Send email using EmailJS with matching template parameters
+                emailjs.send("service_zgbq6fa", "template_uh9cn9d", {
+                    title: "Contact Form Submission", // Add a title parameter
+                    name: nameInput.value,
+                    time: currentTime, // Add time parameter
+                    email: emailInput.value,
+                    message: messageInput.value
+                }).then(function (response) {
+                    console.log("Email sent successfully", response);
+                    alert("Message sent successfully!");
+                    contactForm.reset();
+                }, function (error) {
+                    console.error("Failed to send email", error);
+                    alert("Failed to send message: " + (error.text || "Unknown error"));
+                });
+            }
+        });
+    }
+
     // Helper function to validate email
     function validateEmail(email) {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     }
-    
+
     // Phone mockup animation
     const phoneMockup = document.querySelector('.phone-mockup');
     const appDemo = document.querySelector('.app-demo');
-    
+
     // Create Flutter-style app UI inside the phone mockup
     if (appDemo) {
         // App header
@@ -234,7 +234,7 @@ if (contactForm) {
         appHeader.style.textAlign = 'center';
         appHeader.style.fontWeight = 'bold';
         appDemo.appendChild(appHeader);
-        
+
         // App content
         const appContent = document.createElement('div');
         appContent.className = 'app-content';
@@ -242,50 +242,50 @@ if (contactForm) {
         appContent.style.backgroundColor = 'white';
         appContent.style.height = 'calc(100% - 110px)';
         appContent.style.overflowY = 'auto';
-        
+
         // Portfolio navigation app
-appHeader.innerHTML = '<div class="app-title">Portfolio Guide</div>';
-appHeader.style.backgroundColor = '#19B8FA';
+        appHeader.innerHTML = '<div class="app-title">Portfolio Guide</div>';
+        appHeader.style.backgroundColor = '#19B8FA';
 
-// Create navigation sections
-const sections = [
-    { name: "About Me", icon: "👨‍💻", target: "#about" },
-    { name: "Mobile Apps", icon: "📱", target: "#projects" },
-    { name: "UI/UX Designs", icon: "🎨", target: "#projects" },
-    { name: "Skills", icon: "🛠️", target: "#skills" },
-    { name: "Contact", icon: "📧", target: "#contact" }
-];
+        // Create navigation sections
+        const sections = [
+            { name: "About Me", icon: "👨‍💻", target: "#about" },
+            { name: "Mobile Apps", icon: "📱", target: "#projects" },
+            { name: "UI/UX Designs", icon: "🎨", target: "#projects" },
+            { name: "Skills", icon: "🛠️", target: "#skills" },
+            { name: "Contact", icon: "📧", target: "#contact" }
+        ];
 
-sections.forEach(section => {
-    const navItem = document.createElement('div');
-    navItem.className = 'nav-item';
-    navItem.innerHTML = `
+        sections.forEach(section => {
+            const navItem = document.createElement('div');
+            navItem.className = 'nav-item';
+            navItem.innerHTML = `
         <div style="display: flex; align-items: center;">
             <span style="font-size: 24px; margin-right: 15px;">${section.icon}</span>
             <span style="font-size: 16px;">${section.name}</span>
         </div>
         <i class="fas fa-chevron-right" style="color: #999;"></i>
     `;
-    navItem.style.display = 'flex';
-    navItem.style.justifyContent = 'space-between';
-    navItem.style.alignItems = 'center';
-    navItem.style.backgroundColor = 'white';
-    navItem.style.padding = '15px';
-    navItem.style.borderRadius = '8px';
-    navItem.style.marginBottom = '10px';
-    navItem.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
-    navItem.style.cursor = 'pointer';
-    
-    // Add click functionality to actually navigate the portfolio
-    navItem.addEventListener('click', () => {
-        document.querySelector(section.target).scrollIntoView({behavior: 'smooth'});
-    });
-    
-    appContent.appendChild(navItem);
-});
-        
+            navItem.style.display = 'flex';
+            navItem.style.justifyContent = 'space-between';
+            navItem.style.alignItems = 'center';
+            navItem.style.backgroundColor = 'white';
+            navItem.style.padding = '15px';
+            navItem.style.borderRadius = '8px';
+            navItem.style.marginBottom = '10px';
+            navItem.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+            navItem.style.cursor = 'pointer';
+
+            // Add click functionality to actually navigate the portfolio
+            navItem.addEventListener('click', () => {
+                document.querySelector(section.target).scrollIntoView({ behavior: 'smooth' });
+            });
+
+            appContent.appendChild(navItem);
+        });
+
         appDemo.appendChild(appContent);
-        
+
         // App bottom navigation
         const appNav = document.createElement('div');
         appNav.className = 'app-nav';
@@ -297,7 +297,7 @@ sections.forEach(section => {
         appNav.style.position = 'absolute';
         appNav.style.bottom = '0';
         appNav.style.width = '100%';
-        
+
         // Create nav icons
         ['Home', 'Search', 'Add', 'Notifications', 'Profile'].forEach(item => {
             const navItem = document.createElement('div');
@@ -315,39 +315,39 @@ sections.forEach(section => {
             navItem.style.fontSize = item === 'Add' ? '20px' : '14px';
             appNav.appendChild(navItem);
         });
-        
+
         appDemo.appendChild(appNav);
     }
-    
+
     // Interactive tilt effect for phone mockup
     if (phoneMockup) {
-        phoneMockup.addEventListener('mousemove', function(e) {
+        phoneMockup.addEventListener('mousemove', function (e) {
             const x = e.clientX - this.getBoundingClientRect().left;
             const y = e.clientY - this.getBoundingClientRect().top;
-            
+
             const centerX = this.offsetWidth / 2;
             const centerY = this.offsetHeight / 2;
-            
+
             const deltaX = (x - centerX) / centerX;
             const deltaY = (y - centerY) / centerY;
-            
+
             this.style.transform = `perspective(1000px) rotateY(${deltaX * 10}deg) rotateX(${-deltaY * 10}deg)`;
         });
-        
-        phoneMockup.addEventListener('mouseleave', function() {
+
+        phoneMockup.addEventListener('mouseleave', function () {
             this.style.transform = 'perspective(1000px) rotateY(-15deg) rotateX(5deg)';
         });
     }
 });
 
 // Project Details Modal Functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Get all project cards and add click event
     const projectCards = document.querySelectorAll('.project-card');
     const projectDetailsOverlay = document.getElementById('project-details-overlay');
     const projectDetailsContent = document.getElementById('project-details-content');
     const closeProjectDetails = document.getElementById('close-project-details');
-    
+
     // Project details data - Makadi Vacation
     const projectsData = {
         'makadi-vacation': {
@@ -380,8 +380,8 @@ document.addEventListener('DOMContentLoaded', function() {
             technologies: ['Figma', 'UI/UX', 'Prototype']
         },
         'flash': {
-    title: 'Flash',
-    description: `
+            title: 'Flash',
+            description: `
         <p>This project was designed to streamline the process of buying and selling both new and used cars through a user-friendly online platform. 
         It connects individual sellers, dealerships, and buyers in a secure and efficient environment.</p>
 
@@ -412,8 +412,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         'demoblaze': {
-    title: 'DemoBlaze',
-    description: `
+            title: 'DemoBlaze',
+            description: `
         <p>This project involved a complete UI/UX redesign of an existing e-commerce website that specializes in selling tech products such as laptops, smartphones, and monitors. 
         The redesign was driven by direct user feedback and usability testing to improve both the visual appeal and functional experience of the platform.</p>
 
@@ -430,49 +430,109 @@ document.addEventListener('DOMContentLoaded', function() {
         The result was a more intuitive and engaging shopping experience that increased user satisfaction and conversion potential.</p>
     `,
 
-    gallery: [
-        'assets/Demoblaze/Home.png',
-        'assets/Demoblaze/Place Order.png',
-        'assets/Demoblaze/DeviceDetailes.png'
-    ],
-    links: {
-        behance: 'https://www.behance.net/gallery/229335057/Redesign-for-DemoBalze-website',
-        github: 'https://github.com/your-username/project-repo'
-    },
-    technologies: ['Figma', 'UI/UX', 'User Research', 'Prototype']
-}
+            gallery: [
+                'assets/Demoblaze/Home.png',
+                'assets/Demoblaze/Place Order.png',
+                'assets/Demoblaze/DeviceDetailes.png'
+            ],
+            links: {
+                behance: 'https://www.behance.net/gallery/229335057/Redesign-for-DemoBalze-website',
+                github: 'https://github.com/your-username/project-repo'
+            },
+            technologies: ['Figma', 'UI/UX', 'User Research', 'Prototype']
+        },
+        'flousy': {
+            title: 'Flousy',
+           description: `
+                <p>Flousy is an offline-first personal finance management application designed to help users seamlessly track their income, expenses, and multiple accounts in one place.</p>
+                
+                <p>The key features include:</p>
+                <ul>
+                    <li><strong>Home Screen:</strong> Features quick notes, a built-in calculator, and live currency conversion sync.</li>
+                    <li><strong>My Wallets:</strong> Manage multiple financial sources (Banks, Credit/Debit cards, E-wallets) and view detailed transaction histories for each.</li>
+                    <li><strong>Income & Outcome Tracking:</strong> Dedicated screens to monitor total income and total expenses with custom timeframe filters (e.g., monthly, yearly).</li>
+                    <li><strong>Offline-First Design:</strong> Built for privacy and speed, requiring no login credentials for basic usage.</li>
+                </ul>
+                
+                <p>The project workflow started with designing the UI/UX and interactive prototypes using Figma, followed by developing the actual cross-platform application using Flutter and Dart.</p>
+            `,
+
+            gallery: [
+                'assets/Flousy/HomePage.png',
+                'assets/Flousy/Income_add.png',
+                'assets/Flousy/Income.png',
+                'assets/Flousy/My Wallets Details.png'
+
+            ],
+            links: {
+                behance: '',
+                github: ''
+            },
+            technologies: ['Figma', 'UI/UX', 'Flutter', 'Dart']
+        },
+        'aiotech': {
+            title: 'Smart Market Radar (AIOTech)',
+            description: `
+                <p>Smart Market Radar is an AI-powered electronics decision-support platform built as a graduation project to help users navigate complex tech purchases using automated sentiment analysis and smart comparisons.</p>
+                
+                <p>The key features include:</p>
+                <ul>
+                    <li><strong>AI Feedback Analysis:</strong> Instantly summarizes real user reviews for electronic devices into key pros and cons using Google Gemini LLM integration.</li>
+                    <li><strong>Smart Device Comparison:</strong> Side-by-side analysis tool that leverages AI to evaluate key differences between products.</li>
+                    <li><strong>Multilingual Support:</strong> Seamless localization across languages using <code>easy_localization</code>.</li>
+                    <li><strong>Future Roadmap UI:</strong> Pre-built UI foundations for personalized dashboards, watchlists, and search-based recommendations.</li>
+                </ul>
+                
+                <p>My role as Frontend Developer & Deployment Lead involved architecting the Flutter client using a Service-Oriented Architecture (SOA), along with overseeing multi-cloud deployment—hosting the web frontend on Firebase and the backend infrastructure (ASP.NET Core, FastAPI, and PostgreSQL) on Microsoft Azure.</p>
+            `,
+            // Update these image paths with your actual project assets
+            gallery: [
+                'assets/AIOTech/menu.png',
+                'assets/AIOTech/home.jpg',
+                'assets/AIOTech/profile.jpg',
+                'assets/AIOTech/smartsearch.png',
+                'assets/AIOTech/compare.jpg'
+
+            ],
+            links: {
+                // Replace # with your actual project URLs
+                github: '#',
+                demo: '#'
+            },
+            technologies: ['Flutter', 'Dart', 'Firebase', 'Azure', 'FastAPI', 'ASP.NET Core', 'Google Gemini', 'PostgreSQL']
+        },
 
     };
-    
+
     // Open project details when clicking on a project card
     projectCards.forEach(card => {
-        card.addEventListener('click', function(e) {
+        card.addEventListener('click', function (e) {
             // Don't open modal if clicking on a link
             if (e.target.tagName === 'A' || e.target.parentElement.tagName === 'A') {
                 return;
             }
-            
+
             const projectId = this.getAttribute('data-project-id');
             if (projectId && projectsData[projectId]) {
                 openProjectDetails(projectsData[projectId]);
             }
         });
     });
-    
+
     // Close project details
-    closeProjectDetails.addEventListener('click', function() {
+    closeProjectDetails.addEventListener('click', function () {
         projectDetailsOverlay.classList.remove('active');
         document.body.style.overflow = 'auto';
     });
-    
+
     // Close on overlay click (outside the content)
-    projectDetailsOverlay.addEventListener('click', function(e) {
+    projectDetailsOverlay.addEventListener('click', function (e) {
         if (e.target === projectDetailsOverlay) {
             projectDetailsOverlay.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
     });
-    
+
     // Function to open project details
     function openProjectDetails(project) {
         // Create content for project details
@@ -484,7 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         }
-        
+
         let linksHTML = '';
         if (project.links) {
             linksHTML = '<div class="project-details-links">';
@@ -496,7 +556,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // }
             linksHTML += '</div>';
         }
-        
+
         // Populate content
         projectDetailsContent.innerHTML = `
             <div class="project-details-description">
@@ -512,7 +572,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             ${galleryHTML}
         `;
-        
+
         // Show overlay
         projectDetailsOverlay.classList.add('active');
         document.body.style.overflow = 'hidden'; // Prevent scrolling background
